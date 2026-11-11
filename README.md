@@ -37,7 +37,7 @@ stock screensaver directly, not through the idle service. To make the menu entry
 too, add this line inside `~/.config/omarchy/extensions/omarchy-menu.jsonc` (it reloads live):
 
 ```jsonc
-"system.screensaver": {"action":"$HOME/.config/omarchy/plugins/maxberggren.pixelsaver/bin/pixelsaver-launch force"},
+"system.screensaver": {"icon":"󱄄","label":"Screensaver","action":"$HOME/.config/omarchy/plugins/maxberggren.pixelsaver/bin/pixelsaver-launch force"},
 ```
 
 **How it hooks in.** Omarchy starts the screensaver from its built-in idle service (`omarchy.idle`).
