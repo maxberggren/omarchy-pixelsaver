@@ -19,9 +19,11 @@ while it runs, and only redraws the terminal cells that change.
 
 ```bash
 omarchy plugin add https://github.com/maxberggren/omarchy-pixelsaver.git --enable --yes
+omarchy restart shell
 ```
 
-That's it: the next time your machine goes idle, pixelsaver starts instead of the stock screensaver.
+The restart is needed once, because the built-in idle service stays loaded until the shell restarts.
+After that, the next time your machine goes idle pixelsaver starts instead of the stock screensaver.
 To see it right away (in a terminal):
 
 ```bash
@@ -41,6 +43,7 @@ is launched instead.
 
 ```bash
 omarchy plugin remove maxberggren.pixelsaver
+omarchy restart shell
 ```
 
 or just `omarchy plugin disable maxberggren.pixelsaver` to switch back temporarily.
