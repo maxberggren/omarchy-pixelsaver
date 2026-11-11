@@ -32,6 +32,14 @@ To see it right away (in a terminal):
 
 Any key (or moving focus away) exits, like the built-in screensaver.
 
+**Menu preview.** Omarchy's *System → Screensaver* menu entry (and `omarchy branding screensaver`) call the
+stock screensaver directly, not through the idle service. To make the menu entry preview pixelsaver
+too, add this line inside `~/.config/omarchy/extensions/omarchy-menu.jsonc` (it reloads live):
+
+```jsonc
+"system.screensaver": {"action":"$HOME/.config/omarchy/plugins/maxberggren.pixelsaver/bin/pixelsaver-launch force"},
+```
+
 **How it hooks in.** Omarchy starts the screensaver from its built-in idle service (`omarchy.idle`).
 This plugin is a clone of that service, the same way `omarchy plugin clone` works, with one change:
 when the screensaver timeout fires it launches pixelsaver instead of `omarchy-launch-screensaver`.
