@@ -32,13 +32,15 @@ To see it right away (in a terminal):
 
 Any key (or moving focus away) exits, like the built-in screensaver.
 
-**Menu preview.** Omarchy's *System → Screensaver* menu entry (and `omarchy branding screensaver`) call the
-stock screensaver directly, not through the idle service. To make the menu entry preview pixelsaver
-too, add this line inside `~/.config/omarchy/extensions/omarchy-menu.jsonc` (it reloads live):
+**Menu entry (optional).** Omarchy's *System → Screensaver* menu entry calls the stock screensaver
+directly, not through the idle service. To make it open pixelsaver too, run this once (it adds an override
+to your menu extensions file, which the menu reloads live):
 
-```jsonc
-"system.screensaver": {"icon":"󱄄","label":"Screensaver","action":"$HOME/.config/omarchy/plugins/maxberggren.pixelsaver/bin/pixelsaver-launch force"},
+```bash
+sed -i '$i\  "system.screensaver": {"icon":"󱄄","label":"Screensaver","action":"$HOME/.config/omarchy/plugins/maxberggren.pixelsaver/bin/pixelsaver-launch force"},' ~/.config/omarchy/extensions/omarchy-menu.jsonc
 ```
+
+(`omarchy branding screensaver` still previews with the stock screensaver.)
 
 **How it hooks in.** Omarchy starts the screensaver from its built-in idle service (`omarchy.idle`).
 This plugin is a clone of that service, the same way `omarchy plugin clone` works, with one change:
@@ -47,14 +49,15 @@ Idle timeouts, locking, the stay-awake toggle and `omarchy toggle screensaver` a
 If the bundled binary can't run on your machine (it is built for x86-64), the stock screensaver
 is launched instead.
 
-**Uninstall** (brings the built-in idle service back):
+**Uninstall** (brings the built-in idle service and menu entry back):
 
 ```bash
 omarchy plugin remove maxberggren.pixelsaver
+sed -i '/maxberggren.pixelsaver/d' ~/.config/omarchy/extensions/omarchy-menu.jsonc   # only if you added the menu entry
 omarchy restart shell
 ```
 
-or just `omarchy plugin disable maxberggren.pixelsaver` to switch back temporarily.
+To switch back temporarily instead: `omarchy plugin disable maxberggren.pixelsaver && omarchy restart shell`.
 
 ## Configure
 
