@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "maxberggren.pixelsaver",
+  "name": "Pixelsaver",
+  "version": "1.0.0",
+  "author": "Max Berggren",
+  "description": "A pixel-art screensaver for Omarchy: eight scenes (embers, daylight, deep field, sumi-e, biolume, molten, hyperspace, signal corrupt) drawn from your screensaver branding, as a tiny native binary using ~1% of a core. Replaces the built-in idle service only to launch pixelsaver instead of the stock screensaver; timeouts and locking are unchanged.",
+  "kinds": [
+    "service"
+  ],
+  "keepLoaded": true,
+  "entryPoints": {
+    "service": "Service.qml"
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.idle"
+  }
+}

@@ -1,0 +1,9 @@
+#!/bin/bash
+# Re-render a GIF of every scene into shots/final/.
+cd "$(dirname "$0")/.." && mkdir -p shots/final
+scenes=$(./pixelsaver.py --list | awk '{print $1}')
+for s in $scenes; do
+  secs=30
+  ./pixelsaver.py --gif "$s" --seconds $secs --size 120x34 --px 4 --out "shots/final/$s.gif" >/dev/null &
+done
+wait; ls -la shots/final/*.gif

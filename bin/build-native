@@ -1,0 +1,8 @@
+#!/bin/bash
+# Build the native binary (portable x86-64-v2) and install it as bin/pixelsaver.
+set -euo pipefail
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$DIR/native"
+cargo build --release
+install -m 755 target/release/pixelsaver "$DIR/bin/pixelsaver"
+ls -la "$DIR/bin/pixelsaver"

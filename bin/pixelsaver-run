@@ -1,0 +1,22 @@
+#!/bin/bash
+# Runs inside the fullscreen screensaver terminal (mirrors omarchy-screensaver, but draws pixelsaver).
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+restore() {
+  hyprctl eval 'hl.config({ cursor = { invisible = false } })' &>/dev/null || hyprctl keyword cursor:invisible false &>/dev/null || true
+  pkill -f '[o]rg.omarchy.screensaver' 2>/dev/null
+}
+trap restore EXIT
+printf '\033]11;rgb:00/00/00\007'
+hyprctl eval 'hl.config({ cursor = { invisible = true } })' &>/dev/null || hyprctl keyword cursor:invisible true &>/dev/null
+# terminals start at 80x24 and resize once the compositor sizes the window
+deadline=$((SECONDS + 2))
+while ((SECONDS < deadline)) && [[ $(stty size 2>/dev/null) == "24 80" ]]; do sleep 0.02; done
+# options can be set in ~/.config/omarchy/pixelsaver.conf, e.g.: --scene embers,cosmos --duration 40 --fps 24
+CONF="$HOME/.config/omarchy/pixelsaver.conf"
+opts=()
+[[ -f $CONF ]] && read -r -a opts < <(grep -v '^\s*#' "$CONF" | tr '\n' ' ')
+if "$DIR/bin/pixelsaver" --list >/dev/null 2>&1; then
+  "$DIR/bin/pixelsaver" --omarchy --shuffle "${opts[@]}" "$@"
+else
+  python3 "$DIR/pixelsaver.py" --omarchy --shuffle "$@"
+fi
